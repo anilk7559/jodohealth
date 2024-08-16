@@ -1,0 +1,388 @@
+.plan-container {
+    margin-left: 12px;
+    width: 100%;
+  }
+   .benefit-card {
+    background: #fefaf1;
+    /* padding: 24px; */
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    letter-spacing: 0.5px;
+    position: relative;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 4px 4px rgba(0, 0, 0, 0.08);
+  }
+  
+  .benefit-subcard {
+    display: flex;
+    justify-content: center;
+   
+  }
+  
+  .benefit-plan {
+    background: rgb(74 176 225 / 11%);
+    padding: 10px;
+    width: 100%; /* Adjusted to fit within dialog */
+    flex-direction: column;
+    display: flex;
+    
+  }
+  .choose-plan {
+    font-size: 30px;
+    font-weight: 600;
+    color: rgb(13 121 173);
+  }
+  .choose-plan-heading {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(13 121 173);
+  }
+  
+  .membership-container {
+    flex-direction: row;
+    display: flex;
+  }
+  
+  .membership-sub {
+    padding-right: 4px;
+  }
+
+
+  
+  .logo {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .first-heading {
+    font-size: 24px; /* Adjusted for smaller screens */
+    font-weight: 700;
+    line-height: 36px; /* Adjusted for smaller screens */
+    letter-spacing: 0;
+    padding: 8px 0;
+    color: rgb(13 121 173);
+  }
+  .first-heading-card{
+    font-size: 18px; /* Adjusted for smaller screens */
+    font-weight: 700;
+    line-height: 36px; /* Adjusted for smaller screens */
+    letter-spacing: 0;
+    padding: 8px 0;
+    color: rgb(13 121 173);
+  }
+
+  .benefit-subcard-card{
+    display: flex;
+    justify-content: center;
+    padding: 1.2%;
+  }
+  .textcontainer{
+    font-size: 15px;
+  }
+  .second-heading {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(31 41 55);
+  }
+  
+  .member-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(31 41 55);
+    padding-top: 24px;
+  }
+  
+  .planlogo-container {
+    width: 100%; /* Adjusted to fit within dialog */
+  }
+  
+  .price-container {
+    padding: 16px;
+    margin: 16px 0;
+    background: #fff;
+    border: 2px solid rgb(13 121 173);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 4px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  
+  .price-detail {
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+  }
+  
+  .price-sub-detail {
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-heading {
+    font-weight: 600;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-logo {
+    background-color: rgb(13 121 173);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 2px 6px;
+    margin-left: 4px;
+    border-radius: 4px;
+  }
+  
+  .plan-price {
+    font-size: 36px; /* Adjusted for smaller screens */
+  }
+
+  
+  .monthly-price {
+    align-items: center;
+    color: #767676;
+    font-size: 14px; /* Adjusted for smaller screens */
+    display: flex;
+  }
+  
+  .monthly-save {
+    font-weight: 600;
+    background-color: rgb(13 121 173);
+    border-radius: 4px;
+    margin-left: 4px;
+    padding: 2px 6px;
+    font-size: 12px;
+    color: #fff;
+  }
+  
+  .btn-container {
+    margin: auto;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .btn-container a {
+    color: #ff6f61;
+  }
+  
+  .btn-heading {
+    background: rgb(13 121 173);
+    color: #fff;
+    min-height: 44px;
+    display: flex;
+    padding: 8px 20px;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .btn-heading span {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .price-container.selected {
+    border-color: rgb(13 121 173);
+  }
+  
+  .price-checkbox svg {
+    fill: #767676;
+  }
+  
+  .price-container.selected .price-checkbox svg {
+    fill: rgb(13 121 173);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 1024px) {
+    .benefit-subcard {
+      padding: 20px 5%;   
+    }
+    .benefit-subcard-card {
+      padding: 20px 5%;
+    }
+    .benefit-plan {
+      width: 60%; /* Adjusted for smaller screens */
+    }
+  
+    .planlogo-container {
+      width: 100%; /* Adjusted for smaller screens */
+    }
+  
+    .choose-plan {
+      font-size: 24px; /* Adjusted for smaller screens */
+    }
+    .choose-plan-heading {
+      font-size: 22px; /* Adjusted for smaller screens */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .benefit-subcard {
+      flex-direction: column;
+      align-items: center;
+    }
+    .benefit-subcard-card {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .benefit-plan {
+      width: 80%; /* Adjusted for smaller screens */
+    }
+  
+    .price-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .first-heading {
+      font-size: 20px;
+      line-height: 30px;
+    }
+    .first-heading-card{
+      font-size: 20px;
+      line-height: 30px;
+    }
+  
+    .second-heading,
+    .member-heading {
+      font-size: 16px;
+    }
+  
+    .price-heading {
+      font-size: 18px;
+    }
+  
+    .plan-price {
+      font-size: 24px;
+    }
+  
+    .monthly-price {
+      font-size: 12px;
+    }
+  
+    .btn-heading span {
+      font-size: 16px;
+    }
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+ 
+  }
+  
+  .dropdown-content a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: #f1f1f100;
+    border-bottom: 1px solid white;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f100;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    background-color: rgb(13 121 173);
+  }
+  .login-button-dropdown {
+    padding: 11px;
+    font-weight: 600;
+    color: white;
+}
+  .hederinsidediv{
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+  
+  .headermenus {
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Ensure the span is positioned relative to the icon */
+  }
+  
+  .headermenus img {
+    cursor: pointer;
+  }
+  
+  .contact-number {
+    display: none; /* Initially hide the contact number */
+    position: absolute;
+    top: 100%; /* Position below the icon */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    padding: 0.5rem;
+    background-color: #1ea7d1;
+    box-shadow: 0 2px 4px rgba(184, 158, 158, 0.1);
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap; /* Ensure long numbers don't break into multiple lines */
+  }
+  
+  .headermenus:hover .contact-number {
+    display: block; /* Show on hover */
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .animate-marquee {
+    display: flex;
+    animation: marquee 20s linear infinite;
+  }
+  
+  .service-item {
+    width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+    justify-content: center; /* Center children vertically */
+    text-align: center; /* Center text */
+    flex-shrink: 0;
+  }
+  
+  .service-image {
+    width: 100px; /* Adjust image width */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .service-title {
+    margin-top: 10px; /* Adjust spacing between image and title */
+    font-size: 16px; /* Adjust title font size */
+    color: black; /* Set title color */
+    font-weight: 600; /* Make title bold */
+    text-transform: uppercase; /* Uppercase title */
+  }
+  
+  

@@ -26,6 +26,14 @@ var apiRouter  = require('./routes/api');
 
 var app = express();
 
+// Redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  res.redirect(`https://${req.headers.host}${req.url}`);
+});
+
 // create server
 const http = require("http").createServer(app);
 
@@ -50,9 +58,16 @@ const swaggerSpec = createSwaggerSpec(swaggerUrl);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Configure the CORS middleware to allow all origins
+// // Configure the CORS middleware to allow all origins
+// const corsOptions = {
+//   // origin: true,  // This will allow all origins
+//   origin: '*',
+// };
+
 const corsOptions = {
-  origin: true,  // This will allow all origins
+  origin: 'https://www.jodohealth.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));

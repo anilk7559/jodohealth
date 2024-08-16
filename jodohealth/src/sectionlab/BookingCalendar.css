@@ -1,0 +1,39 @@
+.approved-event {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.pending-event {
+  background-color: #ff7707 !important;
+  color: black !important;
+}
+
+.disapproved-event {
+  background-color: #ff2222 !important;
+  color: white !important;
+}
+
+.modal-content {
+  position: absolute;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px gray;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+}
+
+.modal-buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons > button {
+  width: calc(50% - 8px);
+}
+
+
