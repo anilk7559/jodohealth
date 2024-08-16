@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "empowerhealth",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "u58axq9vnszasymk",
+    "password": "BCJMYkOlNZM24nwHqHWP",
+    "database": "bouq4vrjqxzqltumu5ri",
+    "host": "bouq4vrjqxzqltumu5ri-mysql.services.clever-cloud.com",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

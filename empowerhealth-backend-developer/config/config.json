@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "u652592452_jodohealth",
+    "password": "Nr]D/1a2:",
+    "database": "u652592452_jodohealth",
+    "host": "srv1492.hstgr.io",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "u652592452_jodohealth",
+    "password": "Nr]D/1a2:",
+    "database": "u652592452_jodohealth",
+    "host": "srv1492.hstgr.io",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
