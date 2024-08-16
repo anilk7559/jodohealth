@@ -5,3 +5,4 @@ pm2 kill
 
 
 pm2 start app.js --name empowerhealth-backend
+pm2 restart app.js --name empowerhealth-backend

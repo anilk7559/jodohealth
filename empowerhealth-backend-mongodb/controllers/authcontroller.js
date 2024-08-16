@@ -335,50 +335,102 @@ exports.userRegisterLogin = async (req, res) => {
   //   return helper.error500(res, "Internal Server Error");
   // }
 
-  try {
-    const required = { phone: req.body.phone };
-    const non_required = { role_type: 'User' };
-    let requestData = await helper.validObject(required, non_required, res);
+  // try {
+  //   const required = { phone: req.body.phone };
+  //   const non_required = { role_type: 'User' };
+  //   let requestData = await helper.validObject(required, non_required, res);
 
-    let user = await User.findOne({
-      where: { phone: requestData.phone },
-      raw: true,
-    });
+  //   let user = await User.findOne({
+  //     where: { phone: requestData.phone },
+  //     raw: true,
+  //   });
 
-    if (!user) {
-      // Create the user if not found
-      user = await User.create({
-        phone: requestData.phone,
-      });
+  //   if (!user) {
+  //     // Create the user if not found
+  //     user = await User.create({
+  //       phone: requestData.phone,
+  //     });
 
-      console.log("User created successfully:", user);
+  //     console.log("User created successfully:", user);
+  //   }
+
+  //   // Ensure user object is properly initialized
+  //   if (!user || !user.id) {
+  //     throw new Error("Failed to create or retrieve user.");
+  //   }
+  //   const otp = await sendOtp(`91${requestData.phone}`);
+
+  //   // const otp =sendOtp(`91${requestData.phone}`);
+  //   console.log(otp,"aaaaaaaaaaa")
+  //   const otpSentAt = new Date().getTime();
+
+  //   // await User.update(
+  //   //   { otp, otpSentAt, otpSent: false },
+  //   //   { where: { id: user.id } }
+  //   // );
+
+  //   // Send the OTP using MSG91
+  //   sendOtp(`91${requestData.phone}`); // Ensure the mobile number is in the correct format with country code
+  //   // sendOtp(`917619850994`); 
+  //   // Return the response indicating success
+  //   return helper.success(res, "OTP sent successfully", { otpSent: true });
+
+  // } catch (error) {
+  //   console.log(error);
+  //   return helper.error500(res, "Internal Server Error");
+  // }
+
+    try {
+      const required = { phone: req.body.phone };
+      const non_required = { role_type: 'User' };
+      
+      // Validate and extract required/non-required fields
+      let requestData = await helper.validObject(required, non_required, res);
+  
+      // Find the user by phone number
+      let user = await User.findOne({ phone: requestData.phone }).exec();
+  
+      if (!user) {
+        // If user does not exist, create a new one
+        user = new User({
+          phone: requestData.phone,
+          role_type: 'User',
+        });
+  
+        user = await user.save();
+        console.log("User created successfully:", user);
+      }
+  
+      // Ensure the user object is properly initialized
+      if (!user || !user._id) {
+        throw new Error("Failed to create or retrieve user.");
+      }
+  
+      // Generate OTP
+      const otp = helper.generate(); // Assuming generate() is a helper function for OTP generation
+      user.otp = otp;
+      user.otpSentAt = new Date();
+      user.otpSent = false; // Assuming you want to mark the OTP as not yet sent
+      await user.save();
+  
+      // Send OTP using your OTP service
+      const otpResponse = await sendOtp(`91${requestData.phone}`);
+      console.log(otpResponse, "OTP Response");
+  
+      // If sending the OTP is successful, update the otpSent flag
+      if (otpResponse.success) {
+        user.otpSent = true;
+        await user.save();
+      }
+  
+      // Return success response
+      return helper.success(res, "OTP sent successfully", { otp });
+  
+    } catch (error) {
+      console.error("Error in userRegisterLogin:", error);
+      return helper.error500(res, "Internal Server Error");
     }
-
-    // Ensure user object is properly initialized
-    if (!user || !user.id) {
-      throw new Error("Failed to create or retrieve user.");
-    }
-    const otp = await sendOtp(`91${requestData.phone}`);
-
-    // const otp =sendOtp(`91${requestData.phone}`);
-    console.log(otp,"aaaaaaaaaaa")
-    const otpSentAt = new Date().getTime();
-
-    // await User.update(
-    //   { otp, otpSentAt, otpSent: false },
-    //   { where: { id: user.id } }
-    // );
-
-    // Send the OTP using MSG91
-    sendOtp(`91${requestData.phone}`); // Ensure the mobile number is in the correct format with country code
-    // sendOtp(`917619850994`); 
-    // Return the response indicating success
-    return helper.success(res, "OTP sent successfully", { otpSent: true });
-
-  } catch (error) {
-    console.log(error);
-    return helper.error500(res, "Internal Server Error");
-  }
+    
 };
 
 exports.verifyOtp = async (req, res) => {
