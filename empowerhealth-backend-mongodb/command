@@ -1,0 +1,7 @@
+npm i
+pm2 restart empowerhealth-backend
+pm2 logs empowerhealth-backend
+pm2 kill
+
+
+pm2 start app.js --name empowerhealth-backend
