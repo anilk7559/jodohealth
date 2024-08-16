@@ -340,14 +340,14 @@ exports.userRegisterLogin = async (req, res) => {
     const non_required = { role_type: 'User' };
     let requestData = await helper.validObject(required, non_required, res);
 
-    let user = await db.users.findOne({
+    let user = await db.User.findOne({
       where: { phone: requestData.phone },
       raw: true,
     });
 
     if (!user) {
       // Create the user if not found
-      user = await db.users.create({
+      user = await db.User.create({
         phone: requestData.phone,
       });
 
@@ -364,7 +364,7 @@ exports.userRegisterLogin = async (req, res) => {
     console.log(otp,"aaaaaaaaaaa")
     const otpSentAt = new Date().getTime();
 
-    await db.users.update(
+    await db.User.update(
       { otp, otpSentAt, otpSent: false },
       { where: { id: user.id } }
     );
@@ -451,7 +451,7 @@ exports.verifyOtp = async (req, res) => {
     }
 
     // Find the user by phone number
-    const user = await db.users.findOne({
+    const user = await db.User.findOne({
       where: { phone },
       raw: true,
     });
@@ -469,7 +469,7 @@ exports.verifyOtp = async (req, res) => {
     }
 
     // Mark OTP as used and reset otpSent
-    await db.users.update(
+    await db.User.update(
       { otpSent: false, otp: null, otpSentAt: null }, // Clear the OTP
       { where: { id: user.id } }
     );
