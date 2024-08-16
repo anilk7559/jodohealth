@@ -140,7 +140,7 @@ exports.reset_password = async (req, res) => {
   try {
     const { email, newPassword } = req.body;
 
-    const user = await db.User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
     
     if (!user) {
       return helper.error401(res, "User not found.");
@@ -176,7 +176,7 @@ exports.reset_password = async (req, res) => {
 
     const hash = await bcrypt.hash(req.body.newPassword, 10);
 
-    const updatedUser = await db.User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       {
         email: requestData.email,
         otpEmailSent: 1,
@@ -304,7 +304,7 @@ exports.userRegisterLogin = async (req, res) => {
   //   const non_required = { role_type: 'User' };
   //   let requestData = await helper.validObject(required, non_required, res);
 
-  //   let user = await db.User.findOne({ phone: requestData.phone }).exec();
+  //   let user = await User.findOne({ phone: requestData.phone }).exec();
 
   //   if (!user) {
   //     user = new User({
@@ -340,14 +340,14 @@ exports.userRegisterLogin = async (req, res) => {
     const non_required = { role_type: 'User' };
     let requestData = await helper.validObject(required, non_required, res);
 
-    let user = await db.User.findOne({
+    let user = await User.findOne({
       where: { phone: requestData.phone },
       raw: true,
     });
 
     if (!user) {
       // Create the user if not found
-      user = await db.User.create({
+      user = await User.create({
         phone: requestData.phone,
       });
 
@@ -364,7 +364,7 @@ exports.userRegisterLogin = async (req, res) => {
     console.log(otp,"aaaaaaaaaaa")
     const otpSentAt = new Date().getTime();
 
-    await db.User.update(
+    await User.update(
       { otp, otpSentAt, otpSent: false },
       { where: { id: user.id } }
     );
@@ -451,7 +451,7 @@ exports.verifyOtp = async (req, res) => {
     }
 
     // Find the user by phone number
-    const user = await db.User.findOne({
+    const user = await User.findOne({
       where: { phone },
       raw: true,
     });
@@ -469,7 +469,7 @@ exports.verifyOtp = async (req, res) => {
     }
 
     // Mark OTP as used and reset otpSent
-    await db.User.update(
+    await User.update(
       { otpSent: false, otp: null, otpSentAt: null }, // Clear the OTP
       { where: { id: user.id } }
     );
