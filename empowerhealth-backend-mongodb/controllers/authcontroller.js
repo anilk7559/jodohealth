@@ -364,10 +364,10 @@ exports.userRegisterLogin = async (req, res) => {
     console.log(otp,"aaaaaaaaaaa")
     const otpSentAt = new Date().getTime();
 
-    await User.update(
-      { otp, otpSentAt, otpSent: false },
-      { where: { id: user.id } }
-    );
+    // await User.update(
+    //   { otp, otpSentAt, otpSent: false },
+    //   { where: { id: user.id } }
+    // );
 
     // Send the OTP using MSG91
     sendOtp(`91${requestData.phone}`); // Ensure the mobile number is in the correct format with country code
