@@ -24,7 +24,7 @@ var app = express();
 // Create HTTP server
 const http = require("http").createServer(app);
 
-const ipAddress = helper.getIPAddress(); 
+const ipAddress = helper.getIPAddress();
 const protocol = 'http'; // Only HTTP
 
 // Dynamic URL for Swagger
@@ -36,29 +36,11 @@ const swaggerSpec = createSwaggerSpec(swaggerUrl);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-
-// Define the list of allowed origins
-const allowedOrigins = [
-  'http://192.168.1.100:3000',
-  'http://192.168.29.19:3000',
-  'http://192.168.29.127:5173',
-  'https://lively-pothos-5ac905.netlify.app',
-  'https://marvelous-hummingbird-3c1ac5.netlify.app/login',
-  `http://${ipAddress}:${PORT}`
-];
-console.log(allowedOrigins, "allowedOrigins");
-
-// Configure the CORS middleware
+// CORS configuration
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: 'https://www.jodohealth.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
