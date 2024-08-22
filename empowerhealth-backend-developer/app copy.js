@@ -36,6 +36,7 @@ const swaggerSpec = createSwaggerSpec(swaggerUrl);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
 // Define the list of allowed origins
 const allowedOrigins = [
   'http://192.168.1.100:3000',
