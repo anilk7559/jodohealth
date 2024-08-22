@@ -5,59 +5,69 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
 
-// Custom require package
+// custom require package
 var cors = require('cors');
+
 const fileUpload = require('express-fileupload');
+
 var swaggerUi = require('swagger-ui-express');
+// var swaggerSpec = require('./swaggerDefinition');
 const fs = require('fs');
+const https = require('https');
 const helper = require("./config/helper");
 
-// Port assignment
+// Port assign
 const PORT = 5000;
+const HTTPS_PORT = 5443;
 
 var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
-var apiRouter = require('./routes/api');
+var authRouter  = require('./routes/auth');
+var apiRouter  = require('./routes/api');
 
 var app = express();
 
-// Create HTTP server
+// Redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (req.secure) {
+    return next();
+  }
+  res.redirect(`https://${req.headers.host}${req.url}`);
+});
+
+// create server
 const http = require("http").createServer(app);
 
-const ipAddress = helper.getIPAddress(); 
-const protocol = 'http'; // Only HTTP
+// Optionally create HTTPS server
+let httpsServer;
+if (fs.existsSync('path/to/your/ssl/key.pem') && fs.existsSync('path/to/your/ssl/cert.pem')) {
+  const sslOptions = {
+    key: fs.readFileSync('path/to/your/ssl/key.pem'),
+    cert: fs.readFileSync('path/to/your/ssl/cert.pem')
+  };
+  httpsServer = https.createServer(sslOptions, app);
+}
 
+const ipAddress = helper.getIPAddress();
+const protocol = httpsServer ? 'https' : 'http';
 // Dynamic URL for Swagger
-const swaggerUrl = `${protocol}://${ipAddress}:${PORT}`;
+const swaggerUrl = `${protocol}://${ipAddress}:${protocol === 'https' ? HTTPS_PORT : PORT}/api`;
 const createSwaggerSpec = require('./swaggerDefinition');
 const swaggerSpec = createSwaggerSpec(swaggerUrl);
 
-// View engine setup
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Define the list of allowed origins
-const allowedOrigins = [
-  'http://192.168.1.100:3000',
-  'http://192.168.29.19:3000',
-  'http://192.168.29.127:5173',
-  'https://lively-pothos-5ac905.netlify.app',
-  'https://marvelous-hummingbird-3c1ac5.netlify.app/login',
-  `http://${ipAddress}:${PORT}`
-];
-console.log(allowedOrigins, "allowedOrigins");
+// // Configure the CORS middleware to allow all origins
+// const corsOptions = {
+//   // origin: true,  // This will allow all origins
+//   origin: '*',
+// };
 
-// Configure the CORS middleware
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: 'https://www.jodohealth.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
@@ -80,18 +90,18 @@ app.use('/', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api', apiRouter);
 
-// Catch 404 and forward to error handler
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// Error handler
+// error handler
 app.use(function(err, req, res, next) {
-  // Set locals, only providing error in development
+  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // Render the error page
+  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
@@ -100,5 +110,11 @@ app.use(function(err, req, res, next) {
 http.listen(PORT, () => {
   console.log(`Server Running on http://${ipAddress}:${PORT}`);
 });
+
+if (httpsServer) {
+  httpsServer.listen(HTTPS_PORT, () => {
+    console.log(`Server Running on https://${ipAddress}:${HTTPS_PORT}`);
+  });
+}
 
 module.exports = app;
